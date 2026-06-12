@@ -6,6 +6,17 @@ AI-assisted Development Lifecycle for this repository.
 
 # Project
 
+## Project Setup Check
+
+A project is considered configured when:
+
+- Project name is defined
+- Project description is defined
+- Tech stack is defined
+- Main commands are defined
+- Default branches are defined
+- No template placeholders remain
+
 ## Description
 
 Describe the project, its goals, business context, and primary users.

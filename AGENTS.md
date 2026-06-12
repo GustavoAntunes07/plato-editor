@@ -10,6 +10,16 @@ This repository uses an AI-assisted development lifecycle.
 - Always update the intent status after each stage.
 - Always run the project validation commands before marking work as complete.
 
+## Session start
+
+At the beginning of every session, run:
+
+```bash
+bun aidlc check-setup   
+```
+
+If the setup is incomplete, stop and ask the developer to complete the project setup before continuing.
+
 ## Workflow
 
 1. Reader resolves context.
