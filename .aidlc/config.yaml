@@ -1,0 +1,76 @@
+version: 1
+governance_profile: strict
+
+branches:
+  default: main
+  development: dev
+  intent_prefix: intent/
+
+review:
+  max_cycles: 3
+  mode: manual
+
+validation:
+  commands:
+    - bun aidlc:doctor
+
+agents:
+  required:
+    - aidlc-orchestrator
+    - reader
+    - planner
+    - builder
+    - tester
+    - reviewer
+    - documenter
+
+governance_profiles:
+  strict:
+    description: Stop after every lifecycle stage for explicit developer approval.
+    approval_gates:
+      - context_ready
+      - in_development
+      - ready_for_testing
+      - review
+      - approved
+      - done
+  standard:
+    description: Require approval before implementation and before final completion.
+    approval_gates:
+      - in_development
+      - done
+  autonomous:
+    description: Continue until validation fails, reviewer rejects, or risk/blockers require developer input.
+    approval_gates:
+      - done
+
+lifecycle:
+  initial_status: backlog
+  terminal_statuses:
+    - done
+  transitions:
+    backlog:
+      - context_ready
+      - escalated
+    context_ready:
+      - in_development
+      - backlog
+      - escalated
+    in_development:
+      - ready_for_testing
+      - context_ready
+      - escalated
+    ready_for_testing:
+      - review
+      - in_development
+      - escalated
+    review:
+      - approved
+      - in_development
+      - escalated
+    approved:
+      - done
+      - review
+      - escalated
+    escalated:
+      - backlog

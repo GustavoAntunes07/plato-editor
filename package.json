@@ -1,11 +1,15 @@
 {
   "scripts": {
+    "test": "bun test",
     "aidlc": "bun scripts/aidlc.ts",
     "aidlc:setup": "bun scripts/aidlc.ts setup",
     "aidlc:check": "bun scripts/aidlc.ts check-setup",
     "aidlc:new": "bun scripts/aidlc.ts new", 
     "aidlc:status": "bun scripts/aidlc.ts status",
     "aidlc:next": "bun scripts/aidlc.ts next",
+    "aidlc:validate": "bun scripts/aidlc.ts validate",
+    "aidlc:config": "bun scripts/aidlc.ts config",
+    "aidlc:transition": "bun scripts/aidlc.ts transition",
     "aidlc:doctor": "bun scripts/aidlc.ts doctor"
   },
   "devDependencies": {
