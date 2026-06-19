@@ -1,4 +1,4 @@
-# AI-DLC
+# Plato Editor AI-DLC
 
 AI-assisted Development Lifecycle for repositories that use coding agents.
 
@@ -21,14 +21,21 @@ A project is considered configured when:
 
 ## Description
 
-AI-DLC is a repository template and workflow contract for using Codex-style coding agents in a controlled development lifecycle. It keeps agent work tied to explicit intents, separates planning from implementation and review, and provides a CLI that validates setup, intent structure, governance rules, and lifecycle transitions.
+Plato Editor is a local-first Markdown knowledge editor inspired by tools like Obsidian. The MVP is a desktop app that lets users create, edit, organize, and search notes inside a local vault while keeping the user's files portable and readable outside the app.
 
-Primary users are developers who want AI agents to work inside a repeatable process instead of ad hoc chat sessions.
+The project uses AI-DLC as its repository workflow contract for Codex-style coding agents. Agent work stays tied to explicit intents, planning is separated from implementation and review, and the CLI validates setup, intent structure, governance rules, and lifecycle transitions.
+
+Primary product users are people who want a private, local-first writing and knowledge management environment. Primary repository users are developers who want AI agents to work inside a repeatable process instead of ad hoc chat sessions.
 
 ## Tech Stack
 
 - Bun
 - TypeScript
+- React
+- Vite
+- Tauri 2
+- Rust
+- SQLite
 - Markdown
 - TOML agent configuration
 - YAML lifecycle configuration
@@ -70,6 +77,8 @@ bun aidlc:branch INTENT-001
 ```bash
 bun aidlc:doctor
 ```
+
+Application commands will be added after the desktop app is scaffolded.
 
 ---
 
@@ -437,7 +446,7 @@ Validate functionality.
 Use the following skills when relevant:
 
 - debug - './skills/debug/SKILL.md'
-- TDD - './skilld/TDD/SKILL.md'
+- TDD - './skills/TDD/SKILL.md'
 
 ---
 
