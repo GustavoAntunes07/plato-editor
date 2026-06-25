@@ -139,6 +139,16 @@ describe("AI-DLC CLI", () => {
     expect(output(result)).toContain("AI-DLC doctor completed");
   });
 
+  test("doctor accepts closed intents as terminal records", () => {
+    createConfiguredProject();
+    writeIntent("closed");
+
+    const result = runAidlc(["doctor"]);
+
+    expect(result.exitCode).toBe(0);
+    expect(output(result)).toContain("AI-DLC doctor completed");
+  });
+
   test("doctor fails when a required agent is missing", () => {
     createConfiguredProject();
     writeIntent("ready_for_testing");
@@ -190,6 +200,53 @@ describe("AI-DLC CLI", () => {
 
     expect(result.exitCode).toBe(0);
     expect(updatedIntent).toContain("status: done");
+  });
+
+  test("close marks a non-terminal intent as closed with a reason", () => {
+    createConfiguredProject();
+    writeIntent("backlog");
+
+    const result = runAidlc(["close", "INTENT-001", "duplicate"]);
+    const updatedIntent = readFileSync(
+      join(workspace, "intents", "INTENT-001.md"),
+      "utf-8",
+    );
+
+    expect(result.exitCode).toBe(0);
+    expect(output(result)).toContain("Closed INTENT-001: duplicate");
+    expect(updatedIntent).toContain("status: closed");
+    expect(updatedIntent).toContain("closed_reason: duplicate");
+  });
+
+  test("close refuses to close done intents", () => {
+    createConfiguredProject();
+    writeIntent("done");
+
+    const result = runAidlc(["close", "INTENT-001", "stale"]);
+
+    expect(result.exitCode).toBe(1);
+    expect(output(result)).toContain("Cannot close terminal intent: done");
+  });
+
+  test("new creates shorter intent IDs and branch names", () => {
+    createConfiguredProject();
+
+    const result = runAidlc(["new", "Short ID example"]);
+
+    expect(result.exitCode).toBe(0);
+    expect(output(result)).toMatch(/Created intents[\\/]INTENT-[a-z0-9]{4}\.md/);
+
+    const fileName = output(result).match(/INTENT-[a-z0-9]{4}\.md/)?.[0];
+    expect(fileName).toBeDefined();
+
+    const createdIntent = readFileSync(join(workspace, "intents", fileName!), "utf-8");
+    const shortId = fileName!.replace("INTENT-", "").replace(".md", "");
+
+    expect(shortId.length).toBeLessThan(6);
+    expect(createdIntent).toContain(`id: INTENT-${shortId}`);
+    expect(createdIntent).toContain(
+      `branch: intent/${shortId}-short-id-example`,
+    );
   });
 
   test("branch reports when current branch matches the intent branch", () => {
