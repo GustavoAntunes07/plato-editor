@@ -1,10 +1,17 @@
 {
   "scripts": {
     "test": "bun test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check": "bun run lint && bun test && bun aidlc:doctor",
+    "hooks:install": "git config core.hooksPath .githooks",
+    "hooks:pre-commit": "bun run lint",
+    "hooks:commit-msg": "bun scripts/check-commit-message.ts",
+    "hooks:pre-push": "bun scripts/check-branch.ts && bun run check",
     "aidlc": "bun scripts/aidlc.ts",
     "aidlc:setup": "bun scripts/aidlc.ts setup",
     "aidlc:check": "bun scripts/aidlc.ts check-setup",
-    "aidlc:new": "bun scripts/aidlc.ts new", 
+    "aidlc:new": "bun scripts/aidlc.ts new",
     "aidlc:status": "bun scripts/aidlc.ts status",
     "aidlc:next": "bun scripts/aidlc.ts next",
     "aidlc:validate": "bun scripts/aidlc.ts validate",
@@ -15,7 +22,14 @@
     "aidlc:doctor": "bun scripts/aidlc.ts doctor"
   },
   "devDependencies": {
-    "@types/node": "^25.9.2"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.2",
+    "eslint": "^10.5.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.3",
+    "globals": "^17.7.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.0"
   },
   "dependencies": {
     "fs": "^0.0.1-security",
