@@ -76,6 +76,14 @@ It defines:
 
 The active governance profile decides where the workflow must pause for user approval.
 
+## Review Guidelines
+
+- Prioritize concrete bugs, behavioral regressions, security risks, missing tests, and lifecycle rule violations.
+- Keep review feedback focused on actionable P0/P1 issues.
+- Verify that implementation work is tied to an intent and happens on that intent's branch.
+- Flag automatic commits, pushes, merges, or lifecycle transitions unless the developer explicitly approved them.
+- Treat changes to GitHub workflows, secrets, permissions, and automation triggers as security-sensitive.
+
 ## Agents
 
 Agent definitions live in `.codex/agents/`.
