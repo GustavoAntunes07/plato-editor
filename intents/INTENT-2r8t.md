@@ -1,7 +1,7 @@
 ---
 id: INTENT-2r8t
 title: Establish ESLint and versioned local checks
-status: ready_for_testing
+status: done
 story_points: 3
 retry_count: 0
 branch: intent/2r8t-establish-project-lint-and-commit-push-checks
@@ -66,6 +66,7 @@ This intent owns local developer safeguards: lint scripts, local quality scripts
 - Removed stale `package-lock.json` after Bun migrated dependency locking to `bun.lock`.
 - Created `INTENT-7b75` for the separate GitHub Actions quality pipeline.
 - Refined commit message validation to prefer AI-DLC intent commits such as `intent/2r8t: add eslint and local hooks`.
+- Updated versioned Git hooks to be executable so `core.hooksPath` works on Unix-like environments.
 
 # Test Notes
 
@@ -82,7 +83,16 @@ This intent owns local developer safeguards: lint scripts, local quality scripts
 - Final validation after intent commit format update:
   - `bun run check` passed.
   - `git diff --check` passed with LF/CRLF warnings for touched files.
+- Review follow-up:
+  - Versioned hooks were changed from mode `100644` to `100755`.
 
 # Review Notes
 
+- Reviewed local quality scripts, ESLint config, versioned hooks, branch checks, commit message checks, and docs.
+- Found and fixed one lifecycle-blocking portability issue: versioned hooks needed executable mode for Unix-like environments.
+- No remaining blocking review findings.
+- Approved by reviewer.
+
 # Commits
+
+- commit 5d1b9f3578b657d87ecb1afa80d9eef94e49b550
