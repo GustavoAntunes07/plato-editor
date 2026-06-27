@@ -81,6 +81,8 @@ dev
 intent/*
 ```
 
+The `pre-push` branch check inspects the refs Git passes to the hook on stdin, so explicit refspecs that target `refs/heads/main` are blocked even when the current worktree branch is allowed.
+
 ## Workspace Scope
 
 The ESLint config is prepared for the planned Plato Editor workspace:

@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const cliPath = join(repoRoot, "scripts", "aidlc.ts");
+const checkBranchPath = join(repoRoot, "scripts", "check-branch.ts");
 const configPath = join(repoRoot, ".aidlc", "config.yaml");
 
 let workspace = "";
@@ -21,6 +22,22 @@ function runAidlc(args: string[]) {
   return Bun.spawnSync({
     cmd: [process.execPath, cliPath, ...args],
     cwd: workspace,
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+}
+
+function runCheckBranch(stdin?: string) {
+  const stdinFile = stdin === undefined ? null : join(workspace, "pre-push-stdin.txt");
+
+  if (stdinFile) {
+    writeFile(stdinFile, stdin);
+  }
+
+  return Bun.spawnSync({
+    cmd: [process.execPath, checkBranchPath],
+    cwd: workspace,
+    stdin: stdinFile ? Bun.file(stdinFile) : null,
     stdout: "pipe",
     stderr: "pipe",
   });
@@ -260,6 +277,38 @@ describe("AI-DLC CLI", () => {
     expect(result.exitCode).toBe(0);
     expect(output(result)).toContain("Intent branch exists: yes");
     expect(output(result)).toContain("Branch status: ok");
+  });
+
+  test("branch check rejects pre-push updates targeting main", () => {
+    createConfiguredProject();
+    setCurrentBranch("intent/001-test-intent");
+    const result = runCheckBranch(
+      "HEAD abc123 refs/heads/main 0000000000000000000000000000000000000000\n",
+    );
+
+    expect(result.exitCode).toBe(1);
+    expect(output(result)).toContain("Direct pushes to main are not allowed");
+  });
+
+  test("branch check accepts pre-push updates from allowed local branches", () => {
+    createConfiguredProject();
+    const result = runCheckBranch(
+      "refs/heads/intent/001-test-intent abc123 refs/heads/intent/001-test-intent 0000000000000000000000000000000000000000\n" +
+        "refs/heads/dev def456 refs/heads/dev 0000000000000000000000000000000000000000\n",
+    );
+
+    expect(result.exitCode).toBe(0);
+    expect(output(result)).toContain("Branch check passed for pre-push refs.");
+  });
+
+  test("branch check rejects pre-push updates from disallowed local branches", () => {
+    createConfiguredProject();
+    const result = runCheckBranch(
+      "refs/heads/feature/test abc123 refs/heads/feature/test 0000000000000000000000000000000000000000\n",
+    );
+
+    expect(result.exitCode).toBe(1);
+    expect(output(result)).toContain('Local branch "feature/test" is not allowed');
   });
 
   test("transition to development suggests switching to an existing branch", () => {

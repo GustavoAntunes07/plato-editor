@@ -67,6 +67,7 @@ This intent owns local developer safeguards: lint scripts, local quality scripts
 - Created `INTENT-7b75` for the separate GitHub Actions quality pipeline.
 - Refined commit message validation to prefer AI-DLC intent commits such as `intent/2r8t: add eslint and local hooks`.
 - Updated versioned Git hooks to be executable so `core.hooksPath` works on Unix-like environments.
+- Updated `scripts/check-branch.ts` to inspect Git `pre-push` refs from stdin and block explicit refspecs targeting `refs/heads/main`.
 
 # Test Notes
 
@@ -85,6 +86,8 @@ This intent owns local developer safeguards: lint scripts, local quality scripts
   - `git diff --check` passed with LF/CRLF warnings for touched files.
 - Review follow-up:
   - Versioned hooks were changed from mode `100644` to `100755`.
+- PR review follow-up:
+  - Added regression coverage for pre-push ref inspection, including `HEAD:main` rejection and allowed `dev`/`intent/*` pushes.
 
 # Review Notes
 
