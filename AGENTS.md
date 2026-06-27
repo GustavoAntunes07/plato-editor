@@ -14,6 +14,7 @@ This repository uses an AI-assisted development lifecycle.
 - Use `bun aidlc close <intent-id> [reason]` for intents that should be terminal without becoming `done`.
 - Every change made in the AIDLC.md about the lifecycle architecture also has to be in the AIDLC.template.md.
 - Always run project validation commands before marking work as complete.
+- Run `bun run check` before moving implementation work to review.
 
 ## Out-Of-Lifecycle Questions
 
@@ -44,6 +45,12 @@ Periodically, to verify if everything is all right in the AI-DLC repo, run:
 
 ```bash
 bun aidlc:doctor
+```
+
+For local quality validation, run:
+
+```bash
+bun run check
 ```
 
 ## Runtime Configuration

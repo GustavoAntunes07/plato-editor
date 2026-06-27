@@ -54,6 +54,24 @@ bun install
 bun aidlc:check
 ```
 
+### Local Quality Check
+
+```bash
+bun run check
+```
+
+### Lint
+
+```bash
+bun run lint
+```
+
+### Install Git Hooks
+
+```bash
+bun run hooks:install
+```
+
 ### Create Intent
 
 ```bash
@@ -103,6 +121,7 @@ These rules override any agent-specific behavior.
 - Use the CLI state machine for status transitions.
 - Verify the intent branch before moving to `in_development`.
 - Run project validation before marking an intent as approved or done.
+- Run local quality checks before moving implementation work to review.
 - Never modify unrelated code.
 - Never change architecture without notifying the developer.
 - Every implementation intent should have its own development branch unless the developer explicitly chooses otherwise.
@@ -567,6 +586,8 @@ The config defines:
 - Required agents
 - Approval gates
 - Lifecycle transitions
+
+Local quality checks are documented in `docs/local-quality-checks.md`.
 
 ---
 
