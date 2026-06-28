@@ -97,3 +97,19 @@ tests/
 It supports TypeScript, TSX, browser globals, Bun scripts, and React hook rules. Generated outputs are ignored, including `dist`, `build`, and Tauri/Rust `target` directories.
 
 Rust formatting and Tauri build checks should be added when the Tauri app is scaffolded.
+
+## CI Mapping
+
+GitHub Actions runs the same quality surface in `.github/workflows/quality.yml`.
+
+Local `bun run check` maps to these CI steps:
+
+```bash
+bun run lint
+bun test
+bun aidlc:doctor
+```
+
+CI keeps them as separate steps so GitHub Actions can show which stage failed. CI also runs `bun run build` when a `build` script exists in `package.json`.
+
+See `docs/ci-quality-pipeline.md` for branch protection expectations and workflow details.
