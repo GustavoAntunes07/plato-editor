@@ -4,6 +4,26 @@
 - Current status:
 - Branch:
 
+## About the changes
+
+Type of change:
+
+- [ ] new feature
+- [ ] bug fix
+- [ ] refactor(no functional change)
+- [ ] updating dependecies
+- [ ] updating AIDLC
+
+What changed:
+
+1. 
+2. 
+3.
+
+### Visual changes
+
+ Attach here images, gifs or videos when the PR has visual changes in the project.
+
 ## Validation
 
 - [ ] `bun run check` passed locally
