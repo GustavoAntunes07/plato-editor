@@ -1,16 +1,18 @@
 # Codex PR Review
 
-This project uses a GitHub Actions workflow to ask Codex for a focused pull request review.
+This project keeps an optional GitHub Actions example for asking Codex to perform a focused pull request review.
+
+The workflow is not active by default because it requires OpenAI API credits, an `OPENAI_API_KEY` repository secret, and repository workflow permissions. The active quality pipeline does not depend on OpenAI API access.
 
 ## Workflow
 
-The workflow lives at:
+The example workflow lives at:
 
 ```txt
-.github/workflows/codex-pr-review.yml
+docs/examples/codex-pr-review.yml
 ```
 
-It runs on non-draft pull requests when they are opened, synchronized, reopened, or marked ready for review.
+If copied into `.github/workflows/` in the future, it runs on non-draft pull requests when they are opened, synchronized, reopened, or marked ready for review.
 
 The workflow:
 
@@ -21,7 +23,7 @@ The workflow:
 - Posts or updates one PR comment marked with `<!-- codex-pr-review -->`
 - Does not commit, push, merge, or update AI-DLC lifecycle status
 
-## Required GitHub Setup
+## Required GitHub Setup For Future Use
 
 Add this repository secret:
 
@@ -61,7 +63,7 @@ The review prompt asks Codex to report `No blocking findings.` when it does not 
 
 ## Local Validation
 
-Before changing the workflow or prompt, run:
+Before enabling or changing the workflow or prompt, run:
 
 ```bash
 bun aidlc:doctor
@@ -73,4 +75,4 @@ For YAML-only changes, also inspect the workflow for indentation and GitHub expr
 
 ## Follow-Up Pipeline Work
 
-This workflow is intentionally limited to PR review. Linting, commit checks, push checks, and broader CI gates belong to `INTENT-2r8t`.
+This workflow is intentionally limited to optional PR review. Linting, unit tests, AI-DLC validation, optional build checks, PR templates, and branch protection expectations are handled by `INTENT-7b75` and documented in `docs/ci-quality-pipeline.md`.
