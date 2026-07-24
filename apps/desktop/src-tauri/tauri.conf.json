@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Plato Editor",
+  "version": "0.1.0",
+  "identifier": "com.plato.editor",
+  "build": {
+    "beforeDevCommand": "bun dev",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "bun build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Plato Editor",
+        "width": 1180,
+        "height": 760,
+        "minWidth": 900,
+        "minHeight": 620
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": false,
+    "targets": "all"
+  }
+}
