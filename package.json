@@ -1,5 +1,14 @@
 {
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
+    "desktop:dev": "bun --cwd apps/desktop tauri dev",
+    "desktop:build": "bun --cwd apps/desktop tauri build",
+    "desktop:preview": "bun --cwd apps/desktop vite preview",
+    "build": "bun --cwd apps/desktop build",
     "test": "bun test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -22,6 +31,7 @@
     "aidlc:doctor": "bun scripts/aidlc.ts doctor"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^25.9.2",
     "eslint": "^10.5.0",
